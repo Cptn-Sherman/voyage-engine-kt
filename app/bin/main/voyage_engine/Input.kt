@@ -1,9 +1,9 @@
-package voyage_engine
+package voyage_engine;
 
 import java.nio.DoubleBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList
+import java.util.LinkedList;
 
 import kotlin.collections.MutableList;
 import kotlin.Float
@@ -15,7 +15,7 @@ import org.lwjgl.glfw.GLFW;
 // import glm_.vec3.Vec3;
 // import glm_.mat4x4.Mat4;
 // import glm_.glm;
-import voyage_engine.graphics.Window
+import voyage_engine.graphics.Window;
 
 object Input {
 	var window: Long = 0;

@@ -15,14 +15,16 @@ import org.lwjgl.system.MemoryStack.*;
 import org.lwjgl.system.MemoryUtil.*;
 import voyage_engine.graphics.Window;
 import voyage_engine.graphics.OpenGL;
+import voyage_engine.graphics.RendererAPI
 import voyage_engine.assets.AssetManager;
+import voyage_engine.assets.asset.Texture
 import voyage_engine.state.State;
+import voyage_engine.App
 
 val NS_PER_SECOND = 1000000000.0;
 
 fun main() {
-    var app = App();
-    app.run();
+    App.run();
 }
 
 data class AppMetrics(
@@ -56,13 +58,14 @@ data class AppMetrics(
     }
 }
 
-class App {
+object App {
 	// The window handle
     var running: Boolean = true;
     var currentState = State();
     // application performance 
     // make this into a data class and add frame time average, lowest value, 
     val metrics: AppMetrics = AppMetrics(0, 0, 0, 0, 0, 0, 0, Runtime.getRuntime().maxMemory(), 0.0f);
+    val graphics: RendererAPI = OpenGL();
 
     fun run() {
 		initialize();
@@ -72,9 +75,10 @@ class App {
 
     fun initialize() {
         Window.create("Voyage Engine");
-        OpenGL.initialize();
+        graphics.initialize();
 		Input.setWindowAddress(Window.address);
 		AssetManager.initialize(false);
+        //var texture: Texture? = AssetManager.get<Texture>("something");
 		// print version information
 		println("[engine]: Java: ${System.getProperty("java.version")}");		
 		println("[engine]: OpenGL: ${GL11.glGetString(GL11.GL_VERSION)}");
@@ -150,7 +154,6 @@ class App {
         currentState.tick(delta);
         if (Input.isKeyDown(Key.F12)) {
             this.running = false;
-            println("[engine]: shutting down, goodbye :)");
 		}
 		if(Input.isKeyDebounceDown(Key.END)) {
 			Window.takeScreenshot();
@@ -165,14 +168,15 @@ class App {
     }
     
     fun render() {
-        OpenGL.prepare();
+        graphics.prepare();
         currentState.render();
         Window.update();
-        OpenGL.checkErrors();
+        graphics.checkErrors();
         metrics.frameCount++;
     }
     
     fun dispose() {
+        println("[engine]: shutting down, goodbye :)");
         currentState.dispose();
         AssetManager.cleanup();
         Window.close();
