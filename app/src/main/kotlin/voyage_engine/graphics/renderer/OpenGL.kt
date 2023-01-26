@@ -1,6 +1,8 @@
 package voyage_engine.graphics
 
 import voyage_engine.graphics.RendererAPI;
+import voyage_engine.assets.asset.Texture
+import voyage_engine.assets.asset.Mesh
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
@@ -35,4 +37,22 @@ class OpenGL: RendererAPI() {
             err = GL11.glGetError();
         }
     }
+
+    override fun checkEnableShader(shader: Shader) { }
+
+    override fun bindTexture(texture: Texture) { }
+
+    override fun unbindTexture() { }
+
+    override fun bindMesh(mesh: Mesh) { }
+
+    override fun unbindMesh() { }
+
+    override fun draw() { }
+
+    override fun drawBatches() { }
+
+    override fun loadFloat(locationName: String, value: Float) { }
+
+    override fun loadBoolean(locationName: String, value: Boolean) { }
 }
